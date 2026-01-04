@@ -10,7 +10,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['enigmatic-sands-55648-4c5cb567b505.herokuapp.com']
 
 DATABASES = {
     'default': env.db(),
