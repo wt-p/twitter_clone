@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load account %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="twitter-card">
+
+        <div class="twitter-header">
+            <i class="fab fa-twitter twitter-icon"></i>
+            <h2 class="twitter-title">Twitterクローンにログイン</h2>
+        </div>
+
+        <div id="social-login-area">
+        <!-- 今後ここにgithubログインのボタンをおく予定 -->
+        </div>
+
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="error-banner-text">
+                    {% for error in form.non_field_errors %}
+                        <div class="twitter-error-text">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="twitter-form-group {% if form.login.errors or form.non_field_errors %}has-error{% endif %}">
+                <label for="{{ form.login.id_for_label }}" class="twitter-label">ユーザー名、またはメールアドレス</label>
+                {{ form.login }}
+                {% if form.login.errors %}
+                    {% for error in form.login.errors %}
+                        <div class="twitter-error-text">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="twitter-form-group {% if form.password.errors or form.non_field_errors %}has-error{% endif %}">
+                <label for="{{ form.password.id_for_label }}" class="twitter-label">パスワード</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <div class="twitter-error-text">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <button type="submit" class="twitter-btn-primary mt-4">ログイン</button>
+        </form>
+
+        <div class="mt-4 text-center">
+            <a href="{% url 'account_reset_password' %}" class="twitter-link" style="font-size: 14px;">パスワードを忘れた場合はこちら</a>
+            <p class="mt-5 twitter-muted-text">
+                アカウントをお持ちでない場合は
+                <a href="{% url 'account_signup' %}" class="twitter-link">登録</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

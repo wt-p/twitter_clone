@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+<!-- 仮実装（本実装はトップページの作成課題時に行うため、一旦ログイン時の挙動とログアウトの確認ができるだけの実装） -->
+{% block content %}
+<div style="padding: 40px; font-family: sans-serif; background-color: white; min-height: 100vh; color: black;">
+    <h1 style="font-size: 24px; font-weight: bold;">ホーム</h1>
+
+    <hr style="border: 0; border-top: 1px solid #eff3f4; margin: 20px 0;">
+
+    {% if user.is_authenticated %}
+        <!-- ログイン中に表示する内容 -->
+        <div style="margin-bottom: 24px;">
+            <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                ようこそ、<strong>{{ user.username }}</strong> さん！
+            </p>
+
+            <button style="background-color: #1d9bf0; color: white; border: none; border-radius: 9999px; padding: 12px 24px; font-weight: bold; cursor: pointer; font-size: 15px;">
+                ツイートする
+            </button>
+        </div>
+
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit" style="color: #536471; background: none; border: 1px solid #cfd9de; padding: 6px 16px; border-radius: 9999px; cursor: pointer; font-size: 14px; font-weight: bold;">
+                ログアウト
+            </button>
+        </form>
+
+    {% else %}
+        <!-- 未ログイン中に表示する内容 -->
+        <p style="color: #536471;">ログインしていません。</p>
+        <div style="margin-top: 20px;">
+            <a href="{% url 'account_login' %}" style="color: #1d9bf0; text-decoration: none; font-weight: bold; margin-right: 20px;">ログイン</a>
+            <a href="{% url 'account_signup' %}" style="color: #1d9bf0; text-decoration: none; font-weight: bold;">新規登録</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

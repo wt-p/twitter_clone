@@ -1,3 +1,11 @@
 Django==4.2.5
 django-environ==0.11.2
 psycopg==3.1.12
+gunicorn==23.0.0
+whitenoise==6.7.0
+django-cloudinary-storage==0.3.0
+pillow==12.1.0
+django-allauth==65.1.0
+django-sass-processor==1.4.2
+libsass==0.23.0
+flake8==7.3.0

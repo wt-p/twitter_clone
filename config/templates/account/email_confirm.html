@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load account %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="twitter-card text-center">
+
+        <div class="twitter-header">
+            <i class="fab fa-twitter twitter-icon"></i>
+            <h2 class="twitter-title">メールアドレスの確認</h2>
+        </div>
+
+        <div class="mt-4">
+            {% if confirmation %}
+                <p class="twitter-muted-text">
+                    以下のメールアドレスがユーザー <strong>{{ confirmation.email_address.user.username }}</strong> さんのもので間違いない場合、<br>「確認する」ボタンを押してください。
+                </p>
+
+                <div class="confirmation-email-display">
+                    <span class="twitter-link">
+                        {{ confirmation.email_address.email }}
+                    </span>
+                </div>
+
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit" class="twitter-btn-primary">確認する</button>
+                </form>
+            {% else %}
+                <p class="twitter-muted-text">
+                    この確認リンクは無効か、期限切れです。
+                </p>
+                <a href="{% url 'account_login' %}" class="twitter-btn-outline mt-4">ログイン画面へ</a>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

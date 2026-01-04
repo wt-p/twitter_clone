@@ -1,0 +1,163 @@
+// ==========================================
+// ブランドカラー定義
+// ==========================================
+$twitter-blue: #1d9bf0;
+$twitter-white: #ffffff;
+$twitter-black: #000000;
+$twitter-border: #2f3336;
+$twitter-gray: #71767b;
+$twitter-error: #f4212e;
+
+// ==========================================
+// ベーススタイル
+// ==========================================
+html, body {
+    background-color: $twitter-black !important;
+    color: $twitter-white !important;
+    height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.twitter-card {
+    background-color: $twitter-black !important;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px 20px;
+}
+
+.twitter-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    .twitter-icon { font-size: 3rem; color: $twitter-blue; }
+    .twitter-title { font-weight: bold; margin-top: 1.5rem; font-size: 31px; color: $twitter-white; }
+}
+
+// ==========================================
+// フォーム要素
+// ==========================================
+.twitter-form-group {
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .twitter-label {
+        color: $twitter-gray;
+        font-size: 14px;
+        margin-bottom: 4px;
+        display: block;
+        width: 100%;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"], select {
+        caret-color: $twitter-white !important;
+        background-color: $twitter-black !important;
+        border: 1px solid $twitter-border !important;
+        color: $twitter-white !important;
+        border-radius: 4px !important;
+        padding: 12px !important;
+        width: 100%;
+        outline: none !important;
+        transition: border-color 0.2s;
+
+        &:focus {
+            border: 2px solid $twitter-blue !important;
+            padding: 11px !important;
+        }
+
+        &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus {
+            -webkit-text-fill-color: $twitter-white !important;
+            -webkit-box-shadow: 0 0 0px 1000px $twitter-black inset !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    }
+
+    select {
+        flex: 1;
+        margin-right: 8px;
+        &:last-child { margin-right: 0; }
+    }
+
+    &.has-error {
+        .twitter-label { color: $twitter-error !important; }
+        input, select {
+            border-color: $twitter-error !important;
+            &:focus {
+                border: 2px solid $twitter-error !important;
+                padding: 11px !important;
+                box-shadow: 0 0 0 1px rgba(244, 33, 46, 0.2) !important;
+            }
+        }
+        .twitter-error-text {
+            color: $twitter-error !important;
+            font-size: 13px;
+            margin-top: 4px;
+            width: 100%;
+        }
+    }
+}
+
+// ==========================================
+// ボタン・テキスト
+// ==========================================
+.twitter-btn-primary {
+    background-color: $twitter-blue !important;
+    color: $twitter-white !important;
+    border-radius: 9999px !important;
+    border: none !important;
+    padding: 12px !important;
+    font-weight: bold !important;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    &:hover { opacity: 0.9; color: $twitter-white !important; }
+}
+
+.twitter-btn-outline {
+    display: block; width: 100%; padding: 10px !important;
+    background-color: transparent !important; color: $twitter-white !important;
+    border: 1px solid $twitter-border !important; border-radius: 9999px !important;
+    font-weight: bold !important; text-align: center; text-decoration: none;
+    &:hover { background-color: rgba(255, 255, 255, 0.1) !important; color: $twitter-white !important; }
+}
+
+.twitter-muted-text { color: $twitter-gray; font-size: 14px; line-height: 1.6; }
+.twitter-link { color: $twitter-blue; text-decoration: none; &:hover { text-decoration: underline; } }
+
+.twitter-help-text-static {
+    color: $twitter-gray; font-size: 13px; margin-top: 8px; line-height: 1.4; width: 100%;
+}
+
+// ==========================================
+// フラッシュメッセージ
+// ==========================================
+.flash-message-container {
+    position: fixed; top: 20px; width: 100%; z-index: 9999; pointer-events: none;
+}
+
+.flash-message {
+    background-color: $twitter-blue;
+    color: white;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 12px 20px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    pointer-events: auto;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+// ==========================================
+// ページ固有・ユーティリティ
+// ==========================================
+.confirmation-email-display {
+    font-size: 1.25rem; font-weight: bold; margin: 1.5rem 0;
+}
+.password-reset-success-area {
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid $twitter-border;
+}
+.error-banner-text {
+    margin-bottom: 20px; text-align: center; color: #ffffff; font-size: 15px;
+}

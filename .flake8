@@ -1,0 +1,16 @@
+[flake8]
+# チェックを除外するディレクトリやファイル
+exclude =
+    .git,
+    __pycache__,
+    migrations,
+    .venv,
+    venv,
+    env,
+    staticfiles
+
+# 1行の最大文字数
+max-line-length = 100
+
+# 無視リスト
+ignore = F403, F405
