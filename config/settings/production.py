@@ -20,11 +20,11 @@ STORAGES['default'] = {
     'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
 }
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET')
-}
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': env('CLOUD_NAME'),
+#     'API_KEY': env('CLOUDINARY_API_KEY'),
+#     'API_SECRET': env('CLOUDINARY_API_SECRET')
+# }
 
 # 本番環境はresendを使用
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
