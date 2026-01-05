@@ -174,5 +174,3 @@ SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 
 # --- SCSS設定（ここまで） ---
 
-# resendで使用するメアド
-DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'

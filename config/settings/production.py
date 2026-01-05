@@ -34,3 +34,5 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'resend'
 # HerokuのConfig Varsから読み込み
 EMAIL_HOST_PASSWORD = os.environ.get('RESEND_API_KEY')
+# resendで使用するメアド
+DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'
