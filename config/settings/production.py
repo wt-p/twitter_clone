@@ -8,7 +8,7 @@ import os
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['enigmatic-sands-55648-4c5cb567b505.herokuapp.com']
 
