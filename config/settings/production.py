@@ -37,6 +37,10 @@ EMAIL_HOST_PASSWORD = os.environ.get('RESEND_API_KEY')
 # resendで使用するメアド
 DEFAULT_FROM_EMAIL = 'onboarding@resend.dev'
 
+# Sassの自動コンパイルを本番でも有効にする（WhiteNoiseが拾えるようにするため）
+SASS_PROCESSOR_ENABLED = True
+SASS_PROCESSOR_ROOT = STATIC_ROOT
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
