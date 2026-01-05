@@ -108,7 +108,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
     # 静的ファイル
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        # 修正前
+        # 'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     },
     # 画像アップロード
     # ローカル保存がデフォルト、productionの方でCloudinaryの設定を上書きする
