@@ -156,9 +156,9 @@ ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 MESSAGES_ENABLED = True
 
 # allauthにカスタムフォームを教える
-ACCOUNT_FORMS = {
-    'signup': 'users.forms.CustomSignupForm',
-}
+# ACCOUNT_FORMS = {
+#     'signup': 'users.forms.CustomSignupForm',
+# }
 
 # --- SCSS設定（ここから） ---
 
