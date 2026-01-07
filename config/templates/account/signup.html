@@ -8,6 +8,17 @@
             <i class="fab fa-twitter twitter-icon"></i>
             <h2 class="twitter-title">アカウントを作成</h2>
         </div>
+        <div id="social-signup-area" class="mb-3">
+            <a href="{% url 'github_login' %}" class="btn github-btn w-100 d-flex align-items-center justify-content-center">
+                <i class="fab fa-github me-2"></i> GitHubで登録
+            </a>
+
+            <div class="divider d-flex align-items-center my-4">
+                <hr class="flex-grow-1">
+                <span class="mx-3 text-muted">または</span>
+                <hr class="flex-grow-1">
+            </div>
+        </div>
         <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
             {% csrf_token %}
             {% for field in form %}

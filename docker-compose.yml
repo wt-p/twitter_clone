@@ -36,5 +36,13 @@ services:
       - "1080:1080"
       - "1025:1025"
 
+# scssファイルの自動コンパイル用
+  sass:
+    image: node:18
+    volumes:
+      - .:/code
+    working_dir: /code
+    command: npx sass --watch static/scss/style.scss:staticfiles/scss/style.css
+
 volumes:
   db-data:

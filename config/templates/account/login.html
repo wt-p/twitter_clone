@@ -11,8 +11,16 @@
             <h2 class="twitter-title">Twitterクローンにログイン</h2>
         </div>
 
-        <div id="social-login-area">
-        <!-- 今後ここにgithubログインのボタンをおく予定 -->
+        <div id="social-login-area" class="mb-3">
+            <a href="{% url 'github_login' %}" class="btn github-btn w-100 d-flex align-items-center justify-content-center">
+                <i class="fab fa-github me-2"></i> GitHubでログイン
+            </a>
+
+            <div class="divider d-flex align-items-center my-4">
+                <hr class="flex-grow-1">
+                <span class="mx-3 text-muted">または</span>
+                <hr class="flex-grow-1">
+            </div>
         </div>
 
         <form class="login" method="POST" action="{% url 'account_login' %}">

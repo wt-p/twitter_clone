@@ -24,6 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    # githubログイン用
+    'allauth.socialaccount.providers.github',
     'cloudinary_storage',
     'cloudinary',
     'sass_processor',
@@ -175,4 +178,3 @@ STATICFILES_FINDERS = [
 SASS_PROCESSOR_ROOT = BASE_DIR / 'static'
 
 # --- SCSS設定（ここまで） ---
-
