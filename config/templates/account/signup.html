@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="twitter-card">
+        <div class="twitter-header">
+            <i class="fab fa-twitter twitter-icon"></i>
+            <h2 class="twitter-title">アカウントを作成</h2>
+        </div>
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="twitter-form-group {% if field.errors %}has-error{% endif %}">
+                    <label for="{{ field.id_for_label }}" class="twitter-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="twitter-error-text">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="mt-5">
+                <button type="submit" class="twitter-btn-primary">作成する</button>
+            </div>
+        </form>
+        <p class="mt-5 text-center twitter-muted-text">
+            すでにアカウントをお持ちですか？ <a href="{% url 'account_login' %}" class="twitter-link">ログイン</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

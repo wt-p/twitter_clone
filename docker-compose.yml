@@ -26,6 +26,15 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.local
+
+#  開発環境のメール送信用
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
 
 volumes:
   db-data:
