@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="twitter-card text-center">
+        <div class="twitter-header">
+            <i class="fab fa-github twitter-icon is-white"></i>
+            <h2 class="twitter-title">{{ provider.name }}でログイン</h2>
+        </div>
+
+        <p class="twitter-muted-text mb-4">
+            {{ provider.name }} アカウントを使用してログインしようとしています。続行しますか？
+        </p>
+
+        <!-- django-allauthの仕組みで現在のURLに対してPOST送信する仕組みだからactionを書かなくてもOK -->
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="twitter-btn-primary">続行する</button>
+        </form>
+        <div class="mt-3">
+            <a href="{% url 'account_login' %}" class="twitter-btn-outline d-block">キャンセル</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

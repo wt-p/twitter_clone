@@ -161,3 +161,44 @@ html, body {
 .error-banner-text {
     margin-bottom: 20px; text-align: center; color: #ffffff; font-size: 15px;
 }
+
+// ==========================================
+// GitHubボタンの装飾
+// ==========================================
+.github-btn {
+    // 白背景に黒文字
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #dadce0;
+    // 丸いボタン
+    border-radius: 9999px;
+    font-weight: bold;
+    height: 40px;
+    transition: background-color 0.2s;
+}
+
+.github-btn:hover {
+    background-color: #f7f9f9;
+    border-color: #d1d9dd;
+}
+
+// ==========================================
+// ソーシャルアイコン
+// ==========================================
+.twitter-icon {
+    font-size: 3rem;
+
+    // デフォルトはTwitterブルー
+    color: $twitter-blue;
+
+    // 白色のバリエーション（GitHubやGoogleの確認画面用）
+    &.is-white {
+        color: $twitter-white !important;
+    }
+
+    // エラー（赤色）用
+    &.is-error {
+        color: $twitter-error !important;
+    }
+
+}

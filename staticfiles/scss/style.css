@@ -3,71 +3,87 @@ html, body {
   color: #ffffff !important;
   height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
 .twitter-card {
   background-color: #000000 !important;
   width: 100%;
   max-width: 600px;
-  padding: 40px 20px; }
+  padding: 40px 20px;
+}
 
 .twitter-header {
   text-align: center;
-  margin-bottom: 2rem; }
-  .twitter-header .twitter-icon {
-    font-size: 3rem;
-    color: #1d9bf0; }
-  .twitter-header .twitter-title {
-    font-weight: bold;
-    margin-top: 1.5rem;
-    font-size: 31px;
-    color: #ffffff; }
+  margin-bottom: 2rem;
+}
+.twitter-header .twitter-icon {
+  font-size: 3rem;
+  color: #1d9bf0;
+}
+.twitter-header .twitter-title {
+  font-weight: bold;
+  margin-top: 1.5rem;
+  font-size: 31px;
+  color: #ffffff;
+}
 
 .twitter-form-group {
   margin-bottom: 24px;
   display: flex;
-  flex-wrap: wrap; }
-  .twitter-form-group .twitter-label {
-    color: #71767b;
-    font-size: 14px;
-    margin-bottom: 4px;
-    display: block;
-    width: 100%; }
-  .twitter-form-group input[type="text"], .twitter-form-group input[type="email"], .twitter-form-group input[type="password"], .twitter-form-group select {
-    caret-color: #ffffff !important;
-    background-color: #000000 !important;
-    border: 1px solid #2f3336 !important;
-    color: #ffffff !important;
-    border-radius: 4px !important;
-    padding: 12px !important;
-    width: 100%;
-    outline: none !important;
-    transition: border-color 0.2s; }
-    .twitter-form-group input[type="text"]:focus, .twitter-form-group input[type="email"]:focus, .twitter-form-group input[type="password"]:focus, .twitter-form-group select:focus {
-      border: 2px solid #1d9bf0 !important;
-      padding: 11px !important; }
-    .twitter-form-group input[type="text"]:-webkit-autofill, .twitter-form-group input[type="text"]:-webkit-autofill:hover, .twitter-form-group input[type="text"]:-webkit-autofill:focus, .twitter-form-group input[type="email"]:-webkit-autofill, .twitter-form-group input[type="email"]:-webkit-autofill:hover, .twitter-form-group input[type="email"]:-webkit-autofill:focus, .twitter-form-group input[type="password"]:-webkit-autofill, .twitter-form-group input[type="password"]:-webkit-autofill:hover, .twitter-form-group input[type="password"]:-webkit-autofill:focus, .twitter-form-group select:-webkit-autofill, .twitter-form-group select:-webkit-autofill:hover, .twitter-form-group select:-webkit-autofill:focus {
-      -webkit-text-fill-color: #ffffff !important;
-      -webkit-box-shadow: 0 0 0px 1000px #000000 inset !important;
-      transition: background-color 5000s ease-in-out 0s; }
-  .twitter-form-group select {
-    flex: 1;
-    margin-right: 8px; }
-    .twitter-form-group select:last-child {
-      margin-right: 0; }
-  .twitter-form-group.has-error .twitter-label {
-    color: #f4212e !important; }
-  .twitter-form-group.has-error input, .twitter-form-group.has-error select {
-    border-color: #f4212e !important; }
-    .twitter-form-group.has-error input:focus, .twitter-form-group.has-error select:focus {
-      border: 2px solid #f4212e !important;
-      padding: 11px !important;
-      box-shadow: 0 0 0 1px rgba(244, 33, 46, 0.2) !important; }
-  .twitter-form-group.has-error .twitter-error-text {
-    color: #f4212e !important;
-    font-size: 13px;
-    margin-top: 4px;
-    width: 100%; }
+  flex-wrap: wrap;
+}
+.twitter-form-group .twitter-label {
+  color: #71767b;
+  font-size: 14px;
+  margin-bottom: 4px;
+  display: block;
+  width: 100%;
+}
+.twitter-form-group input[type=text], .twitter-form-group input[type=email], .twitter-form-group input[type=password], .twitter-form-group select {
+  caret-color: #ffffff !important;
+  background-color: #000000 !important;
+  border: 1px solid #2f3336 !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 12px !important;
+  width: 100%;
+  outline: none !important;
+  transition: border-color 0.2s;
+}
+.twitter-form-group input[type=text]:focus, .twitter-form-group input[type=email]:focus, .twitter-form-group input[type=password]:focus, .twitter-form-group select:focus {
+  border: 2px solid #1d9bf0 !important;
+  padding: 11px !important;
+}
+.twitter-form-group input[type=text]:-webkit-autofill, .twitter-form-group input[type=text]:-webkit-autofill:hover, .twitter-form-group input[type=text]:-webkit-autofill:focus, .twitter-form-group input[type=email]:-webkit-autofill, .twitter-form-group input[type=email]:-webkit-autofill:hover, .twitter-form-group input[type=email]:-webkit-autofill:focus, .twitter-form-group input[type=password]:-webkit-autofill, .twitter-form-group input[type=password]:-webkit-autofill:hover, .twitter-form-group input[type=password]:-webkit-autofill:focus, .twitter-form-group select:-webkit-autofill, .twitter-form-group select:-webkit-autofill:hover, .twitter-form-group select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  -webkit-box-shadow: 0 0 0px 1000px #000000 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+.twitter-form-group select {
+  flex: 1;
+  margin-right: 8px;
+}
+.twitter-form-group select:last-child {
+  margin-right: 0;
+}
+.twitter-form-group.has-error .twitter-label {
+  color: #f4212e !important;
+}
+.twitter-form-group.has-error input, .twitter-form-group.has-error select {
+  border-color: #f4212e !important;
+}
+.twitter-form-group.has-error input:focus, .twitter-form-group.has-error select:focus {
+  border: 2px solid #f4212e !important;
+  padding: 11px !important;
+  box-shadow: 0 0 0 1px rgba(244, 33, 46, 0.2) !important;
+}
+.twitter-form-group.has-error .twitter-error-text {
+  color: #f4212e !important;
+  font-size: 13px;
+  margin-top: 4px;
+  width: 100%;
+}
 
 .twitter-btn-primary {
   background-color: #1d9bf0 !important;
@@ -79,10 +95,12 @@ html, body {
   width: 100%;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block; }
-  .twitter-btn-primary:hover {
-    opacity: 0.9;
-    color: #ffffff !important; }
+  display: inline-block;
+}
+.twitter-btn-primary:hover {
+  opacity: 0.9;
+  color: #ffffff !important;
+}
 
 .twitter-btn-outline {
   display: block;
@@ -94,35 +112,42 @@ html, body {
   border-radius: 9999px !important;
   font-weight: bold !important;
   text-align: center;
-  text-decoration: none; }
-  .twitter-btn-outline:hover {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important; }
+  text-decoration: none;
+}
+.twitter-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
 
 .twitter-muted-text {
   color: #71767b;
   font-size: 14px;
-  line-height: 1.6; }
+  line-height: 1.6;
+}
 
 .twitter-link {
   color: #1d9bf0;
-  text-decoration: none; }
-  .twitter-link:hover {
-    text-decoration: underline; }
+  text-decoration: none;
+}
+.twitter-link:hover {
+  text-decoration: underline;
+}
 
 .twitter-help-text-static {
   color: #71767b;
   font-size: 13px;
   margin-top: 8px;
   line-height: 1.4;
-  width: 100%; }
+  width: 100%;
+}
 
 .flash-message-container {
   position: fixed;
   top: 20px;
   width: 100%;
   z-index: 9999;
-  pointer-events: none; }
+  pointer-events: none;
+}
 
 .flash-message {
   background-color: #1d9bf0;
@@ -134,22 +159,52 @@ html, body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   pointer-events: auto;
   font-family: sans-serif;
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .confirmation-email-display {
   font-size: 1.25rem;
   font-weight: bold;
-  margin: 1.5rem 0; }
+  margin: 1.5rem 0;
+}
 
 .password-reset-success-area {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #2f3336; }
+  border-top: 1px solid #2f3336;
+}
 
 .error-banner-text {
   margin-bottom: 20px;
   text-align: center;
   color: #ffffff;
-  font-size: 15px; }
+  font-size: 15px;
+}
+
+.github-btn {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #dadce0;
+  border-radius: 9999px;
+  font-weight: bold;
+  height: 40px;
+  transition: background-color 0.2s;
+}
+
+.github-btn:hover {
+  background-color: #f7f9f9;
+  border-color: #d1d9dd;
+}
+
+.twitter-icon {
+  font-size: 3rem;
+  color: #1d9bf0;
+}
+.twitter-icon.is-white {
+  color: #ffffff !important;
+}
+.twitter-icon.is-error {
+  color: #f4212e !important;
+}
 
 /*# sourceMappingURL=style.css.map */
