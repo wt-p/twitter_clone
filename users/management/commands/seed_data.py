@@ -80,4 +80,3 @@ class Command(BaseCommand):
                 Follow.objects.get_or_create(follower=user, followee=target)
 
         self.stdout.write(self.style.SUCCESS('すべてのデータの生成が完了しました！'))
-

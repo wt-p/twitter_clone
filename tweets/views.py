@@ -20,4 +20,3 @@ def home(request):
         'page_obj': page_obj,
         'tab': tab
     })
-
