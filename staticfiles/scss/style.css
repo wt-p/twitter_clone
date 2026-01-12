@@ -467,4 +467,23 @@ html, body {
   display: block;
 }
 
+.empty-timeline {
+  padding: 40px 20px;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.empty-timeline h2 {
+  font-size: 31px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.empty-timeline p {
+  font-size: 15px;
+  color: #71767b;
+  line-height: 20px;
+}
+
 /*# sourceMappingURL=style.css.map */
