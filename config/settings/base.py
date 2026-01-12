@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'sass_processor',
     'users',
+    'tweets',
 ]
 
 # django.contrib.sitesフレームワークで使うデフォルトID
@@ -141,9 +142,9 @@ AUTHENTICATION_BACKENDS = [
 
 # allauthの挙動設定
 # ログイン後のリダイレクト先
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
 # ログアウト後のリダイレクト先
-ACCOUNT_LOGOUT_REDIRECT_URL = '/home'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
 # サインアップ設定
 # ユーザー名とメアド両方使用
