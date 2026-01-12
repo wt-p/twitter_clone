@@ -83,17 +83,19 @@
                     {% endfor %}
                 </div>
 
-                <nav class="home-pagination">
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">← 前のツイート</a></li>
-                        {% endif %}
-                        <li class="page-item disabled"><span class="page-link active-page">{{ page_obj.number }}</span></li>
-                        {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">次のツイート →</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
+                {% if page_obj %}
+                    <nav class="home-pagination">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">← 前のツイート</a></li>
+                            {% endif %}
+                            <li class="page-item disabled"><span class="page-link active-page">{{ page_obj.number }}</span></li>
+                            {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">次のツイート →</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
 
             {% else %}
                 <div class="welcome-section">
