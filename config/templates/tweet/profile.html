@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-wrapper">
+    <header class="home-header">
+        <div class="header-inner">
+            <div class="header-center">
+                <div class="logo-area profile-nav-area">
+                    <i class="fab fa-twitter twitter-icon"></i>
+                    <span class="header-title">Twitterクローン</span>
+                    <a href="{% url 'tweets:home' %}" class="back-btn-aligned">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                </div>
+
+                <div class="header-profile-text-area">
+                    <h2 class="header-display-name">{{ profile_user.display_name|default:profile_user.username }}</h2>
+                    <span class="header-tweet-count">{{ profile_user.tweets.count }} 件のツイート</span>
+                </div>
+            </div>
+            <div class="header-right"></div>
+        </div>
+    </header>
+
+    <div class="home-container">
+        <nav class="home-sidebar">
+            <a href="{% url 'tweets:home' %}" class="nav-link">
+                <i class="fas fa-home"></i> <span>ホーム</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-hashtag"></i> <span>話題を検索</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="far fa-bell"></i> <span>通知</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="far fa-envelope"></i> <span>メッセージ</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="far fa-bookmark"></i> <span>ブックマーク</span>
+            </a>
+            <a href="" class="nav-link">
+                <i class="fab fa-twitter"></i> <span>Twitter Blue</span>
+            </a>
+            <a href="{% url 'tweets:profile' user.username %}"
+               class="nav-link {% if user == profile_user %}active {% endif %}">
+                <i class="far fa-user"></i> <span>プロフィール</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i> <span>設定</span>
+            </a>
+        </nav>
+
+        <main class="home-main">
+            <div class="profile-header-container">
+                <div class="profile-banner"></div>
+
+                <div class="profile-info-content">
+                    <div class="info-top-row">
+                        <div class="profile-large-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        {% if user == profile_user %}
+                            <button class="twitter-btn-outline edit-btn">プロフィールを編集</button>
+                        {% endif %}
+                    </div>
+
+                    <div class="user-profile-details">
+                        <h2 class="profile-display-name">{{ profile_user.display_name|default:profile_user.username }}</h2>
+                        <p class="profile-username">@{{ profile_user.username }}</p>
+
+                        <div class="profile-bio">
+                            {% if profile_user.bio %}
+                                <p>{{ profile_user.bio }}</p>
+                            {% elif user == profile_user %}
+                                <p class="bio-placeholder">自己紹介を設定して、自分について知ってもらいましょう。</p>
+                            {% endif %}
+                        </div>
+
+                        <div class="profile-metadata">
+                            {% if profile_user.location %}
+                                <span class="meta-item">
+                                    <i class="fas fa-map-marker-alt"></i> {{ profile_user.location }}
+                                </span>
+                            {% endif %}
+
+                            {% if profile_user.website %}
+                                <span class="meta-item">
+                                    <i class="fas fa-link"></i>
+                                    <a href="{{ profile_user.website }}" target="_blank" class="twitter-link">{{ profile_user.website }}</a>
+                                </span>
+                            {% endif %}
+
+                            {% if profile_user.date_of_birth %}
+                                <span class="meta-item">
+                                    <i class="fas fa-birthday-cake"></i> 誕生日: {{ profile_user.birth_date_display }}
+                                </span>
+                            {% endif %}
+
+                            <span class="meta-item">
+                                <i class="far fa-calendar-alt"></i> {{ profile_user.start_date_display }}からTwitterクローンを利用しています
+                            </span>
+                        </div>
+
+                        <div class="profile-stats">
+                            <span><strong>{{ profile_user.following.count }}</strong> フォロー中</span>
+                            <span><strong>{{ profile_user.followers.count }}</strong> フォロワー</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-tab-nav">
+                    <a href="?tab=tweet" class="profile-tab-item {% if tab == 'tweet' %}active{% endif %}">ツイート</a>
+                    <a href="?tab=comment" class="profile-tab-item {% if tab == 'comment' %}active{% endif %}">コメント</a>
+                    <a href="?tab=retweet" class="profile-tab-item {% if tab == 'retweet' %}active{% endif %}">リツイート</a>
+                    <a href="?tab=like" class="profile-tab-item {% if tab == 'like' %}active{% endif %}">いいね</a>
+                </div>
+            </div>
+
+           <div class="tweet-list">
+                {% for tweet in page_obj %}
+                    <div class="tweet-thread-container">
+                        {% if tab == 'comment' and tweet.reply %}
+                            <div class="tweet-item parent-tweet">
+                                <div class="user-avatar-container">
+                                    <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                                    <div class="thread-line"></div>
+                                </div>
+                                <div class="tweet-content">
+                                    {% if tweet.reply.retweet %}
+                                        <div class="retweet-indicator">
+                                            <i class="fas fa-retweet"></i>
+                                            <span>
+                                                {% if user == profile_user %}
+                                                    あなた
+                                                {% else %}
+                                                    {{ tweet.reply.user.display_name|default:tweet.reply.user.username }}
+                                                {% endif %}
+                                                がリツイートしました
+                                            </span>
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="tweet-meta">
+                                        {% with target=tweet.reply.retweet|default:tweet.reply %}
+                                            <span class="display-name">{{ target.user.display_name|default:target.user.username }}</span>
+                                            <span class="username">@{{ target.user.username }}</span>
+                                            <span class="timestamp">· {{ target.formatted_date }}</span>
+                                        {% endwith %}
+                                    </div>
+
+                                    <div class="tweet-text">
+                                        {{ tweet.reply.retweet.content|default:tweet.reply.content }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="tweet-item main-tweet {% if tab == 'comment' and tweet.reply %}is-reply{% endif %}">
+                            <div class="user-avatar-container">
+                                <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                            </div>
+                            <div class="tweet-content">
+                                {% if tweet.retweet %}
+                                    <div class="retweet-indicator">
+                                        <i class="fas fa-retweet"></i>
+                                        <span>
+                                            {% if user == profile_user %}
+                                                あなた
+                                            {% else %}
+                                                {{ profile_user.display_name|default:profile_user.username }}
+                                            {% endif %}
+                                            がリツイートしました
+                                        </span>
+                                    </div>
+                                {% endif %}
+
+                                <div class="tweet-meta">
+                                    {% with target=tweet.retweet|default:tweet %}
+                                        <span class="display-name">{{ target.user.display_name|default:target.user.username }}</span>
+                                        <span class="username">@{{ target.user.username }}</span>
+                                        <span class="timestamp">· {{ target.formatted_date }}</span>
+                                    {% endwith %}
+                                </div>
+
+                                {% if tweet.reply and tab == 'comment' %}
+                                    <div class="replying-to">
+                                        返信先: <a href="{% url 'tweets:profile' tweet.reply.user.username %}">@{{ tweet.reply.user.username }}</a>
+                                    </div>
+                                {% endif %}
+
+                                <div class="tweet-text">
+                                    {{ tweet.retweet.content|default:tweet.content }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-timeline">
+                        <p>まだ投稿がありません</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if page_obj %}
+                <nav class="home-pagination">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">← 前へ</a></li>
+                        {% endif %}
+                        <li class="page-item disabled"><span class="page-link active-page">{{ page_obj.number }}</span></li>
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">次へ →</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </main>
+        <div class="home-right-space"></div>
+    </div>
+</div>
+{% endblock %}

@@ -17,7 +17,16 @@ class Tweet(models.Model):
         blank=True,
         related_name='retweets'
     )
-    content = models.CharField(max_length=140)
+    reply = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        # 元ツイートから返信一覧を引く用（tweet.replies）
+        related_name='replies'
+    )
+    # リツイート時のためにDBのnullは許可するが、ツイート時にblankは許可しないように
+    content = models.CharField(max_length=140, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -41,4 +50,30 @@ class Tweet(models.Model):
         return formatted
 
     def __str__(self):
-        return f'{self.user.username}: {self.content[:20]}'
+        # content がある場合は先頭20文字、ない場合（リツイートなど）は固定文言を返す
+        if self.content:
+            content_display = self.content[:20]
+        else:
+            content_display = "内容なし（リツイート）"
+        return f"{self.user.username}: {content_display}"
+
+
+class Like(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        # ユーザーから「いいね一覧」を引く用
+        related_name='likes'
+    )
+    tweet = models.ForeignKey(
+        'Tweet',
+        on_delete=models.CASCADE,
+        # ツイートから「いいねしてくれた人一覧」を引く用
+        related_name='favorited_by'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # ここで user_id と tweet_id の組み合わせをユニークにする（DBレベルの制約）
+        unique_together = ('user', 'tweet')

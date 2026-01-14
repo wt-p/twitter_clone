@@ -356,3 +356,308 @@ html, body {
         line-height: 20px;
     }
 }
+
+// ==========================================
+// プロフィール画面専用スタイル
+// ==========================================
+// プロフィール用ヘッダーテキスト（中央配置）
+.header-profile-text-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    height: 100%;
+
+    .header-display-name {
+        font-size: 19px;
+        font-weight: 800;
+        margin: 0;
+        line-height: 1.2;
+        color: $twitter-white;
+    }
+
+    .header-tweet-count {
+        font-size: 13px;
+        color: $twitter-gray;
+        display: block;
+    }
+}
+
+// 戻るボタンのスタイル
+.back-btn {
+    color: $twitter-white;
+    font-size: 18px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    &:hover { background-color: rgba($twitter-white, 0.1); }
+}
+
+// メインコンテンツエリアのプロフィール
+.profile-header-container {
+    border-bottom: 1px solid $twitter-border;
+
+    .profile-banner {
+        height: 200px;
+        background-color: #333639;
+    }
+
+    .profile-info-content {
+        padding: 12px 16px 0;
+
+        .info-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            height: 70px;
+
+            .profile-large-avatar {
+                font-size: 140px;
+                color: $twitter-gray;
+                background-color: $twitter-black;
+                border: 4px solid $twitter-black;
+                border-radius: 50%;
+                width: 140px;
+                height: 140px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: -70px; // バナーに半分乗せる
+                overflow: hidden;
+                i { line-height: 1; }
+            }
+
+            .edit-btn {
+                width: auto !important;
+                padding: 8px 16px !important;
+                margin-left: auto !important;
+                font-size: 14px;
+            }
+        }
+
+        .user-profile-details {
+            margin-top: 10px;
+            .profile-display-name { font-size: 20px; font-weight: 800; margin: 0; color: $twitter-white; }
+            .profile-username { color: $twitter-gray; font-size: 15px; margin-bottom: 12px; }
+            .profile-bio {
+                font-size: 15px;
+                line-height: 1.4;
+                margin-bottom: 12px;
+                color: $twitter-white;
+
+                .bio-placeholder {
+                    color: $twitter-gray;
+                }
+            }
+            .profile-metadata {
+                display: flex;
+                flex-wrap: wrap; // 項目が多い時に自動で改行
+                column-gap: 20px; // 横の間隔
+                row-gap: 4px;    // 改行した時の縦の間隔
+                margin-bottom: 12px;
+                color: $twitter-gray;
+                font-size: 14px;
+
+                .meta-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px; // アイコンとテキストの間隔
+
+                    i {
+                        font-size: 14px;
+                        width: 18px;
+                        text-align: center;
+                    }
+                }
+            }
+            .profile-stats {
+                display: flex; gap: 20px; font-size: 14px; color: $twitter-gray; margin-bottom: 16px;
+                strong { color: $twitter-white; }
+            }
+        }
+    }
+
+    .profile-tab-nav {
+        display: flex;
+        .profile-tab-item {
+            flex: 1; text-align: center; padding: 15px 0; color: $twitter-gray;
+            font-weight: bold; text-decoration: none; position: relative; font-size: 15px;
+            &:hover { background-color: rgba($twitter-white, 0.05); }
+            &.active {
+                color: $twitter-white;
+                &::after {
+                    content: ""; position: absolute; bottom: 0; left: 50%;
+                    transform: translateX(-50%); width: 60px; height: 4px;
+                    background-color: $twitter-blue; border-radius: 9999px;
+                }
+            }
+        }
+    }
+}
+
+// ==========================================
+// スレッド表示（縦線）のスタイル
+// ==========================================
+.tweet-thread-container {
+    border-bottom: 1px solid $twitter-border;
+
+    .tweet-item {
+        border-bottom: none !important;
+        display: flex;
+        gap: 12px;
+        padding: 12px 16px;
+
+        // アイコンと縦線を管理するコンテナ
+        .user-avatar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 48px;
+
+            .user-avatar {
+                font-size: 48px;
+                color: $twitter-gray;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                position: relative;
+                z-index: 1;
+                background-color: $twitter-black;
+            }
+
+            .thread-line {
+                width: 2px;
+                background-color: #333639;
+                // flex-growで親要素の高さ分だけ伸ばす
+                flex-grow: 1;
+                margin-top: -4px; // アイコンの少し上から開始
+                margin-bottom: -12px; // 下のアイテムに食い込ませる
+                min-height: 20px; // 線が消えないように最低高さを確保
+            }
+        }
+
+        .tweet-content {
+            flex: 1;
+        }
+    }
+
+    // 親ツイート固有の設定
+    .parent-tweet {
+        padding-bottom: 0 !important;
+    }
+
+    // 子ツイート（返信）固有の設定
+    .main-tweet.is-reply {
+        padding-top: 4px !important;
+    }
+
+    .replying-to {
+        color: $twitter-gray;
+        font-size: 14px;
+        margin-bottom: 4px;
+        a {
+            color: $twitter-blue;
+            text-decoration: none;
+            &:hover { text-decoration: underline; }
+        }
+    }
+}
+
+// ==========================================
+// 矢印の位置を境界線に合わせるための調整
+// ==========================================
+.profile-nav-area {
+    position: relative;
+    width: 255px; // サイドバー領域
+    display: flex;
+    align-items: center;
+
+    .back-btn-aligned {
+        color: $twitter-white;
+        font-size: 18px;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        text-decoration: none;
+
+        // サイドバーの右端（メインカラムの開始線）にピタッと寄せる
+        position: absolute;
+        right: -18px; // 矢印の円の中心が境界線に来るように調整
+
+        transition: background-color 0.2s;
+        &:hover { background-color: rgba($twitter-white, 0.1); }
+    }
+}
+
+// ヘッダーテキストの余白を調整（矢印と重ならないように）
+.header-profile-text-area {
+    padding-left: 45px;
+}
+
+// ==========================================
+// リツイートのデザイン
+// ==========================================
+// リツイートインジケーターの統一デザイン
+.retweet-indicator {
+    color: $twitter-gray;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px; // アイコンと文字の間隔
+
+    i {
+        font-size: 14px;
+    }
+}
+
+// ユーザー情報（名前・ID・時間）の横並び
+.tweet-meta {
+    display: flex;
+    gap: 4px;
+    font-size: 15px;
+    align-items: baseline;
+
+    .display-name {
+        font-weight: bold;
+        color: $twitter-white;
+        &:hover { text-decoration: underline; }
+    }
+
+    .username, .timestamp {
+        color: $twitter-gray;
+    }
+}
+
+// 返信先リンク
+.replying-to {
+    color: $twitter-gray;
+    font-size: 14px;
+    margin-bottom: 4px;
+    a {
+        color: $twitter-blue;
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
+    }
+}
+
+// スレッドの縦線調整
+.thread-line {
+    width: 2px;
+    background-color: #333639;
+    flex-grow: 1;
+    margin-top: -4px;
+    margin-bottom: -12px;
+    min-height: 20px;
+}

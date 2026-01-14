@@ -1,54 +1,71 @@
 import random
+import datetime
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
 from django.core.management.base import BaseCommand
-from tweets.models import Tweet
-from users.models import Follow
+from tweets.models import Tweet, Like
 
 # これで現在有効なUserクラスが取得できる
 User = get_user_model()
 
 
 class Command(BaseCommand):
-    help = 'テスト用のユーザー、ツイート、フォロー関係を生成するコマンド'
+    help = """
+        以下のデータを生成・同期するシードスクリプトです：
+        1. テストユーザー10名の作成（既存ユーザーはプロフィール補完）
+        2. 各ユーザーによる3〜5件の通常ツイート（指定済みリストからランダム）
+        3. 全ユーザーにおいて最低1件以上の「リツイート」「返信」「いいね」「フォロー」を保証
+    """
 
     def handle(self, *args, **kwargs):
-        self.stdout.write('seedデータを作成中...')
+        self.stdout.write(self.style.MIGRATE_HEADING('--- Seedデータ作成プロセス開始 ---'))
 
-        # 1. テストユーザーの作成（20人）
-        self.stdout.write('ユーザーを生成中...')
-        for i in range(20):
-            username = f'testuser_{i}'
-            if not User.objects.filter(username=username).exists():
-                User.objects.create_user(
-                    username=username,
-                    email=f'{username}@example.com',
-                    password='password123',
-                    display_name=f'ユーザー_{i}',
-                    bio=f'こんにちは、{username}です。',
-                )
-        # 既存ユーザーも追加
-        all_users = list(User.objects.all())
+        # 1. ユーザーの生成とプロフィール更新
+        self.stdout.write('1. ユーザー情報を作成中...')
+        for i in range(10):
+            user, created = User.objects.get_or_create(
+                username=f'testuser_{i}',
+                defaults={
+                    'email': f'testuser_{i}@example.com',
+                    'display_name': f'ユーザー_{i}',
+                    'password': make_password('password123'),
+                }
+            )
+            if created:
+                self.stdout.write(self.style.SUCCESS(f'[新規作成] {user.username}'))
 
-        tweet = [
-            # 開発・仕事系
+        all_users = User.objects.all()
+        for user in all_users:
+            updated = False
+            if not user.bio:
+                user.bio = f'こんにちは、{user.username}です。Twitterクローン開発中！'
+                updated = True
+            if not user.location:
+                user.location = random.choice(['東京', '大阪', '名古屋', '福岡', '沖縄'])
+                updated = True
+            if not user.website:
+                user.website = 'https://example.com'
+                updated = True
+            if not user.date_of_birth:
+                user.date_of_birth = datetime.date(1990, 1, 1)
+                updated = True
+            if updated:
+                user.save()
+        self.stdout.write('[完了] 全ユーザーのプロフィールを補完しました。')
+
+        tweet_contents = [
             '今日も1日お疲れ様でした！進捗ダメです！ 🫠',
             'デプロイ直前の緊張感、何回やっても慣れないわ...',
             'バグが取れなくて3時間。原因はタイポでした。解散！ 🙄',
             'カフェでコーディングすると捗る気がするのは何でだろう。 ☕',
-
-            # 日常・食事系
             'お昼ごはん、何食べようかな。ラーメンの口になってる 🍜',
             '結局、家のカレーが一番美味しい説 🍛',
             'コンビニの新作スイーツ、ついつい買っちゃうよね。 🍰',
             '朝起きたら喉が痛い...。みんなも風邪には気をつけて！ 😷',
-
-            # 趣味・つぶやき
             '週末の天気が良さそうで嬉しい！キャンプ行きたい ⛺',
             '最近買ったキーボードが最高すぎて、無駄にタイピングしてる ⌨️',
             '積読が溜まっていく一方...。時間が足りない！ 📚',
             '推しの新曲が良すぎてもう無限ループしてる 🎧',
-
-            # あるある系
             'フォロー外から失礼します！これめっちゃわかります 🤝',
             'あ、もうこんな時間...。SNS見てると時間溶けるの早すぎ ⏰',
             '久しぶりに実家に帰ったら、猫に忘れられてて泣いた 🐈',
@@ -57,26 +74,48 @@ class Command(BaseCommand):
             '「明日から本気出す」をもう3日言ってる 🛌',
         ]
 
-        # 2. ツイートの作成
-        self.stdout.write('ツイートを生成中...')
+        # 2. 通常ツイートの生成
+        self.stdout.write('2. 通常ツイートを生成中...')
         for user in all_users:
-            for _ in range(random.randint(3, 10)):
-                # IDを振ることでツイートを見分けやすくするため
-                content = random.choice(tweet) + f'(ID: {random.randint(1, 999)})'
+            current_count = user.tweets.filter(retweet__isnull=True, reply__isnull=True).count()
+            if current_count < 3:
+                num_to_create = random.randint(3, 5)
+                for _ in range(num_to_create):
+                    Tweet.objects.create(
+                        user=user,
+                        content=random.choice(tweet_contents) + f' (ID:{random.randint(100, 999)})'
+                    )
+        self.stdout.write('[完了] 通常ツイートの生成が完了しました。')
+
+        # 3. フォロー、リツイート、コメント、いいねの生成
+        self.stdout.write('3. フォロー・RT・コメント・いいねを作成中...')
+        all_tweets = list(Tweet.objects.filter(retweet__isnull=True, reply__isnull=True))
+
+        for user in all_users:
+            # フォロー
+            target_follows = random.sample(
+                [u for u in all_users if u != user], random.randint(1, 3)
+            )
+            for target in target_follows:
+                user.following.add(target)
+
+            # リツイート（1件以上）
+            if not Tweet.objects.filter(user=user, retweet__isnull=False).exists():
+                target = random.choice(all_tweets)
+                Tweet.objects.create(user=user, retweet=target, content=None)
+
+            # コメント（1件以上）
+            if not Tweet.objects.filter(user=user, reply__isnull=False).exists():
+                target = random.choice(all_tweets)
                 Tweet.objects.create(
                     user=user,
-                    content=content
+                    reply=target,
+                    content='それな'
                 )
 
-        # 3. フォロー関係の生成
-        self.stdout.write('フォロー関係を生成中...')
-        for user in all_users:
-            # 自分以外を抽出
-            other_users = [u for u in all_users if u != user]
-            # 1〜5人をランダムに選んでフォロー
-            targets = random.sample(other_users, k=random.randint(1, 5))
-            for target in targets:
-                # 重複して作成されないように get_or_create を使用
-                Follow.objects.get_or_create(follower=user, followee=target)
+            # いいね（1件以上）
+            if not Like.objects.filter(user=user).exists():
+                target = random.choice(all_tweets)
+                Like.objects.get_or_create(user=user, tweet=target)
 
-        self.stdout.write(self.style.SUCCESS('すべてのデータの生成が完了しました！'))
+        self.stdout.write(self.style.SUCCESS('--- Seedデータの作成がすべて完了しました！ ---'))

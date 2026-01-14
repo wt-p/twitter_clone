@@ -31,6 +31,22 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def start_date_display(self):
+        # yyyy年m月形式の文字列を返す
+        if not self.created_at:
+            return ''
+        return self.created_at.strftime('%Y年%-m月')
+
+    @property
+    def birth_date_display(self):
+        # 誕生日をyyyy年m月d日形式で返す
+        # 誕生日は設定していないユーザーがいる（NULLの可能性がある）ので、ガード
+        if not self.date_of_birth:
+            return None
+        # %-m, %-d で 1月1日 のように 0埋めなしで出力
+        return self.date_of_birth.strftime('%Y年%-m月%-d日')
+
     def __str__(self):
         return self.username
 
