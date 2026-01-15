@@ -202,3 +202,157 @@ html, body {
     }
 
 }
+
+// ==========================================
+// ホーム画面 全体レイアウト
+// ==========================================
+.home-wrapper { background-color: $twitter-black; min-height: 100vh; }
+
+.home-header {
+    background-color: rgba($twitter-black, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid $twitter-border;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    .header-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        height: 53px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .header-center {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        height: 100%;
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            // サイドバーの幅(275px)からヘッダーpadding(20px)を引いた値
+            width: 255px;
+            .twitter-icon { font-size: 1.8rem; color: $twitter-blue; }
+            .header-title { font-size: 19px; font-weight: bold; color: $twitter-white; white-space: nowrap; margin: 0; }
+        }
+
+        .header-tabs {
+            display: flex;
+            height: 100%;
+            // タイムラインの幅に固定
+            width: 600px;
+
+            .tab-item {
+                flex: 1; display: flex; align-items: center; justify-content: center;
+                text-decoration: none; color: $twitter-gray; font-weight: bold; font-size: 15px;
+                position: relative; transition: color 0.2s, background-color 0.2s;
+                &:hover { color: $twitter-white; background-color: rgba($twitter-white, 0.05); }
+                &.active {
+                    color: $twitter-white;
+                    &::after {
+                        content: ""; position: absolute; bottom: 0; left: 50%;
+                        transform: translateX(-50%); width: 56px; height: 4px;
+                        background-color: $twitter-blue; border-radius: 9999px;
+                    }
+                }
+            }
+        }
+    }
+
+    .header-right {
+        flex: 1; display: flex; justify-content: flex-end; align-items: center;
+        .twitter-btn-outline, .twitter-btn-primary {
+            width: auto !important; padding: 6px 16px !important; font-size: 14px; margin: 0 !important;
+        }
+    }
+}
+
+.home-container { display: flex; justify-content: center; max-width: 1200px; margin: 0 auto; }
+
+// サイドバー
+.home-sidebar {
+    width: 275px; padding: 10px 12px; position: sticky; top: 53px; height: calc(100vh - 53px);
+    .nav-link {
+        display: flex; align-items: center; gap: 20px; padding: 12px; font-size: 20px; color: $twitter-white; text-decoration: none; border-radius: 9999px; transition: background-color 0.2s;
+        i { width: 26px; text-align: center; }
+        span { margin-right: 16px; }
+        &:hover { background-color: rgba($twitter-white, 0.1); }
+        // ホームを青くする
+        &.active { font-weight: bold; color: $twitter-blue; }
+    }
+}
+
+// メインコンテンツ
+.home-main {
+    width: 600px; border-left: 1px solid $twitter-border; border-right: 1px solid $twitter-border;
+
+    .post-form-area {
+        padding: 15px; display: flex; gap: 12px; border-bottom: 1px solid $twitter-border;
+        .user-avatar { font-size: 48px; color: $twitter-gray; }
+        .form-content {
+            flex: 1;
+            textarea { width: 100%; background: transparent; border: none; color: white; font-size: 20px; outline: none; resize: none; margin-top: 10px; }
+            .form-actions {
+                display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid $twitter-border; padding-top: 12px;
+                .image-icon { color: $twitter-blue; font-size: 20px; cursor: pointer; }
+                .post-btn { width: auto !important; padding: 8px 24px !important; }
+            }
+        }
+    }
+
+    .tweet-item {
+        display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid $twitter-border;
+        &:hover { background-color: rgba($twitter-white, 0.03); }
+        .user-avatar { font-size: 48px; color: $twitter-gray; }
+        .tweet-content {
+            flex: 1;
+            .tweet-meta { display: flex; gap: 4px; font-size: 15px; .display-name { font-weight: bold; color: $twitter-white; } .username, .timestamp { color: $twitter-gray; } }
+            .tweet-text { color: $twitter-white; font-size: 15px; line-height: 20px; margin-top: 2px; }
+        }
+    }
+
+    .home-pagination {
+        padding: 30px;
+        .pagination { justify-content: center; gap: 5px; }
+        .page-link { background-color: $twitter-black; border-color: $twitter-border; color: $twitter-blue; border-radius: 4px; &.active-page { background-color: $twitter-blue; color: white; border-color: $twitter-blue; } }
+    }
+}
+
+.home-right-space { width: 350px; }
+
+// 未ログイン時の案内
+.welcome-section {
+    padding: 60px 40px; text-align: center; background-color: $twitter-black; width: 100%;
+    .welcome-title { font-size: 31px; font-weight: bold; color: $twitter-white; margin-bottom: 8px; }
+    .welcome-text { font-size: 15px; color: $twitter-gray; margin-bottom: 24px; }
+    .welcome-btn { width: 100% !important; max-width: 380px; margin: 0 auto; padding: 12px 32px !important; font-size: 16px; display: block; }
+}
+
+// ==========================================
+// タイムライン空状態のスタイル
+// ==========================================
+.empty-timeline {
+    padding: 40px 20px;
+    text-align: center;
+    max-width: 400px;
+    margin: 0 auto;
+
+    h2 {
+        font-size: 30px;
+        font-weight: 800;
+        color: $twitter-white;
+        margin-bottom: 8px;
+        line-height: 1.2;
+    }
+
+    p {
+        font-size: 15px;
+        color: $twitter-gray;
+        line-height: 20px;
+    }
+}

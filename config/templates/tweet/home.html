@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-wrapper">
+    <header class="home-header">
+        <div class="header-inner">
+            <div class="header-center">
+                <div class="logo-area">
+                    <i class="fab fa-twitter twitter-icon"></i>
+                    <span class="header-title">Twitterクローン</span>
+                </div>
+
+                {% if user.is_authenticated %}
+                <div class="header-tabs">
+                    <a href="?tab=recommend" class="tab-item {% if tab == 'recommend' %}active{% endif %}">おすすめ</a>
+                    <a href="?tab=following" class="tab-item {% if tab == 'following' %}active{% endif %}">フォロー中</a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="header-right">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="twitter-btn-outline">ログアウト</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="twitter-btn-outline">ログイン</a>
+                    <a href="{% url 'account_signup' %}" class="twitter-btn-primary">新規登録</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <div class="home-container">
+        <nav class="home-sidebar">
+            <a href="{% url 'tweets:home' %}" class="nav-link active">
+                <i class="fas fa-home"></i> <span>ホーム</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-hashtag"></i> <span>話題を検索</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="far fa-user"></i> <span>プロフィール</span>
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i> <span>設定</span>
+            </a>
+        </nav>
+
+        <main class="home-main">
+            {% if user.is_authenticated %}
+                <div class="post-form-area">
+                    <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                    <div class="form-content">
+                        <textarea placeholder="いまどうしてる？" rows="2"></textarea>
+                        <div class="form-actions">
+                            <i class="far fa-image image-icon"></i>
+                            <button class="twitter-btn-primary post-btn">ツイートする</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tweet-list">
+                    {% for tweet in page_obj %}
+                        <div class="tweet-item">
+                            <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                            <div class="tweet-content">
+                                <div class="tweet-meta">
+                                    <span class="display-name">{{ tweet.user.display_name|default:tweet.user.username }}</span>
+                                    <span class="username">@{{ tweet.user.username }}</span>
+                                    <span class="timestamp">· {{ tweet.formatted_date }}</span>
+                                </div>
+                                <div class="tweet-text">{{ tweet.content }}</div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="empty-timeline">
+                            <h2>タイムラインへようこそ！</h2>
+                            <p>いま起きていることを見つけたり、誰かをフォローして最新のツイートをチェックしましょう。</p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {% if page_obj %}
+                    <nav class="home-pagination">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">← 前のツイート</a></li>
+                            {% endif %}
+                            <li class="page-item disabled"><span class="page-link active-page">{{ page_obj.number }}</span></li>
+                            {% if page_obj.has_next %}
+                                <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">次のツイート →</a></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+
+            {% else %}
+                <div class="welcome-section">
+                    <h2 class="welcome-title">Twitterクローンを使ってみよう</h2>
+                    <p class="welcome-text">今すぐ登録して、タイムラインをカスタマイズしましょう。</p>
+                    <a href="{% url 'account_signup' %}" class="twitter-btn-primary welcome-btn">アカウントを作成</a>
+                </div>
+            {% endif %}
+        </main>
+        <div class="home-right-space"></div>
+    </div>
+</div>
+{% endblock %}
