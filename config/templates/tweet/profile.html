@@ -26,29 +26,37 @@
     <div class="home-container">
         <nav class="home-sidebar">
             <a href="{% url 'tweets:home' %}" class="nav-link">
-                <i class="fas fa-home"></i> <span>ホーム</span>
+                <i class="fas fa-home"></i>
+                <span>ホーム</span>
             </a>
             <a href="#" class="nav-link">
-                <i class="fas fa-hashtag"></i> <span>話題を検索</span>
+                <i class="fas fa-hashtag"></i>
+                <span>話題を検索</span>
             </a>
             <a href="#" class="nav-link">
-                <i class="far fa-bell"></i> <span>通知</span>
+                <i class="far fa-bell"></i>
+                <span>通知</span>
             </a>
             <a href="#" class="nav-link">
-                <i class="far fa-envelope"></i> <span>メッセージ</span>
+                <i class="far fa-envelope"></i>
+                <span>メッセージ</span>
             </a>
             <a href="#" class="nav-link">
-                <i class="far fa-bookmark"></i> <span>ブックマーク</span>
+                <i class="far fa-bookmark"></i>
+                <span>ブックマーク</span>
             </a>
             <a href="" class="nav-link">
-                <i class="fab fa-twitter"></i> <span>Twitter Blue</span>
+                <i class="fab fa-twitter"></i>
+                <span>Twitter Blue</span>
             </a>
             <a href="{% url 'tweets:profile' user.username %}"
                class="nav-link {% if user == profile_user %}active {% endif %}">
-                <i class="far fa-user"></i> <span>プロフィール</span>
+                <i class="far fa-user"></i>
+                <span>プロフィール</span>
             </a>
             <a href="#" class="nav-link">
-                <i class="fas fa-cog"></i> <span>設定</span>
+                <i class="fas fa-cog"></i>
+                <span>設定</span>
             </a>
         </nav>
 
@@ -88,18 +96,24 @@
                             {% if profile_user.website %}
                                 <span class="meta-item">
                                     <i class="fas fa-link"></i>
-                                    <a href="{{ profile_user.website }}" target="_blank" class="twitter-link">{{ profile_user.website }}</a>
+                                    <a href="{{ profile_user.website }}"
+                                       target="_blank"
+                                       class="twitter-link">
+                                        {{ profile_user.website }}
+                                    </a>
                                 </span>
                             {% endif %}
 
                             {% if profile_user.date_of_birth %}
                                 <span class="meta-item">
-                                    <i class="fas fa-birthday-cake"></i> 誕生日: {{ profile_user.birth_date_display }}
+                                    <i class="fas fa-birthday-cake"></i>
+                                    誕生日: {{ profile_user.birth_date_display }}
                                 </span>
                             {% endif %}
 
                             <span class="meta-item">
-                                <i class="far fa-calendar-alt"></i> {{ profile_user.start_date_display }}からTwitterクローンを利用しています
+                                <i class="far fa-calendar-alt"></i>
+                                {{ profile_user.start_date_display }}からTwitterクローンを利用しています
                             </span>
                         </div>
 
@@ -144,7 +158,9 @@
 
                                     <div class="tweet-meta">
                                         {% with target=tweet.reply.retweet|default:tweet.reply %}
-                                            <span class="display-name">{{ target.user.display_name|default:target.user.username }}</span>
+                                            <span class="display-name">
+                                                {{ target.user.display_name|default:target.user.username }}
+                                            </span>
                                             <span class="username">@{{ target.user.username }}</span>
                                             <span class="timestamp">· {{ target.formatted_date }}</span>
                                         {% endwith %}
@@ -178,7 +194,9 @@
 
                                 <div class="tweet-meta">
                                     {% with target=tweet.retweet|default:tweet %}
-                                        <span class="display-name">{{ target.user.display_name|default:target.user.username }}</span>
+                                        <span class="display-name">
+                                            {{ target.user.display_name|default:target.user.username }}
+                                        </span>
                                         <span class="username">@{{ target.user.username }}</span>
                                         <span class="timestamp">· {{ target.formatted_date }}</span>
                                     {% endwith %}
@@ -186,7 +204,10 @@
 
                                 {% if tweet.reply and tab == 'comment' %}
                                     <div class="replying-to">
-                                        返信先: <a href="{% url 'tweets:profile' tweet.reply.user.username %}">@{{ tweet.reply.user.username }}</a>
+                                        返信先:
+                                        <a href="{% url 'tweets:profile' tweet.reply.user.username %}">
+                                            @{{ tweet.reply.user.username }}
+                                        </a>
                                     </div>
                                 {% endif %}
 
@@ -207,11 +228,23 @@
                 <nav class="home-pagination">
                     <ul class="pagination">
                         {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">← 前へ</a></li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="?tab={{ tab }}&page={{ page_obj.previous_page_number }}">
+                                    ← 前へ
+                                </a>
+                            </li>
                         {% endif %}
-                        <li class="page-item disabled"><span class="page-link active-page">{{ page_obj.number }}</span></li>
+                        <li class="page-item disabled">
+                            <span class="page-link active-page">{{ page_obj.number }}</span>
+                        </li>
                         {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link" href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">次へ →</a></li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="?tab={{ tab }}&page={{ page_obj.next_page_number }}">
+                                    次へ →
+                                </a>
+                            </li>
                         {% endif %}
                     </ul>
                 </nav>
