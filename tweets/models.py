@@ -77,3 +77,6 @@ class Like(models.Model):
     class Meta:
         # ここで user_id と tweet_id の組み合わせをユニークにする（DBレベルの制約）
         unique_together = ('user', 'tweet')
+
+    def __str__(self):
+        return f"{self.user.username} liked: {self.tweet.content[:20]}"

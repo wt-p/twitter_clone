@@ -14,7 +14,7 @@ class Command(BaseCommand):
         以下のデータを生成・同期するシードスクリプトです：
         1. テストユーザー10名の作成（既存ユーザーはプロフィール補完）
         2. 各ユーザーによる3〜5件の通常ツイート（指定済みリストからランダム）
-        3. 全ユーザーにおいて最低1件以上の「リツイート」「返信」「いいね」「フォロー」を保証
+        3. 全ユーザーにおいて最低1件の「リツイート」「返信」「いいね」「フォロー」を保証
     """
 
     def handle(self, *args, **kwargs):
@@ -92,19 +92,19 @@ class Command(BaseCommand):
         all_tweets = list(Tweet.objects.filter(retweet__isnull=True, reply__isnull=True))
 
         for user in all_users:
-            # フォロー
+            # フォロー（1人〜3人）
             target_follows = random.sample(
                 [u for u in all_users if u != user], random.randint(1, 3)
             )
             for target in target_follows:
                 user.following.add(target)
 
-            # リツイート（1件以上）
+            # リツイート（無ければ1件作成）
             if not Tweet.objects.filter(user=user, retweet__isnull=False).exists():
                 target = random.choice(all_tweets)
                 Tweet.objects.create(user=user, retweet=target, content=None)
 
-            # コメント（1件以上）
+            # コメント（無ければ1件作成）
             if not Tweet.objects.filter(user=user, reply__isnull=False).exists():
                 target = random.choice(all_tweets)
                 Tweet.objects.create(
@@ -113,7 +113,7 @@ class Command(BaseCommand):
                     content='それな'
                 )
 
-            # いいね（1件以上）
+            # いいね（無ければ1件作成）
             if not Like.objects.filter(user=user).exists():
                 target = random.choice(all_tweets)
                 Like.objects.get_or_create(user=user, tweet=target)
