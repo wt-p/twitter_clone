@@ -429,7 +429,8 @@ html, body {
                 align-items: center;
                 justify-content: center;
                 position: absolute;
-                top: -70px; // バナーに半分乗せる
+                // バナーに半分乗せる
+                top: -70px;
                 overflow: hidden;
                 i { line-height: 1; }
             }
@@ -458,9 +459,12 @@ html, body {
             }
             .profile-metadata {
                 display: flex;
-                flex-wrap: wrap; // 項目が多い時に自動で改行
-                column-gap: 20px; // 横の間隔
-                row-gap: 4px;    // 改行した時の縦の間隔
+                // 項目が多い時に自動で改行
+                flex-wrap: wrap;
+                // 横の間隔
+                column-gap: 20px;
+                // 改行した時の縦の間隔
+                row-gap: 4px;
                 margin-bottom: 12px;
                 color: $twitter-gray;
                 font-size: 14px;
@@ -468,7 +472,8 @@ html, body {
                 .meta-item {
                     display: flex;
                     align-items: center;
-                    gap: 4px; // アイコンとテキストの間隔
+                    // アイコンとテキストの間隔
+                    gap: 4px;
 
                     i {
                         font-size: 14px;
@@ -537,9 +542,12 @@ html, body {
                 background-color: #333639;
                 // flex-growで親要素の高さ分だけ伸ばす
                 flex-grow: 1;
-                margin-top: -4px; // アイコンの少し上から開始
-                margin-bottom: -12px; // 下のアイテムに食い込ませる
-                min-height: 20px; // 線が消えないように最低高さを確保
+                // アイコンの少し上から開始
+                margin-top: -4px;
+                // 下のアイテムに食い込ませる
+                margin-bottom: -12px;
+                // 線が消えないように最低高さを確保
+                min-height: 20px;
             }
         }
 
@@ -575,7 +583,8 @@ html, body {
 // ==========================================
 .profile-nav-area {
     position: relative;
-    width: 255px; // サイドバー領域
+    // サイドバー領域
+    width: 255px;
     display: flex;
     align-items: center;
 
@@ -592,7 +601,8 @@ html, body {
 
         // サイドバーの右端（メインカラムの開始線）にピタッと寄せる
         position: absolute;
-        right: -18px; // 矢印の円の中心が境界線に来るように調整
+        // 矢印の円の中心が境界線に来るように調整
+        right: -18px;
 
         transition: background-color 0.2s;
         &:hover { background-color: rgba($twitter-white, 0.1); }
@@ -615,7 +625,8 @@ html, body {
     margin-bottom: 4px;
     display: flex;
     align-items: center;
-    gap: 10px; // アイコンと文字の間隔
+    // アイコンと文字の間隔
+    gap: 10px;
 
     i {
         font-size: 14px;
