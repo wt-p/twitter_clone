@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home-wrapper">
+    <header class="home-header">
+        <div class="header-inner">
+            <div class="header-center">
+                <div class="logo-area {% block logo_area_class %}{% endblock %}">
+                    <i class="fab fa-twitter twitter-icon"></i>
+                    <span class="header-title">Twitterクローン</span>
+                    {% block back_button %}{% endblock %}
+                </div>
+                {% block header_center_content %}{% endblock %}
+            </div>
+
+            <div class="header-right">
+                {% block header_right_content %}{% endblock %}
+            </div>
+        </div>
+    </header>
+
+    <div class="home-container">
+        {% include 'include/_left_sidebar.html' %}
+
+        <main class="home-main">
+            {% block main_content %}{% endblock %}
+        </main>
+
+        <div class="home-right-space">
+            {% block right_sidebar %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

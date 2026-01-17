@@ -28,16 +28,23 @@ def profile(request, username):
     # 自分以外のプロフィールにもアクセス可能
     profile_user = get_object_or_404(User, username=username)
     tab = request.GET.get('tab', 'tweet')
-    # デフォルトのクエリ（「ツイート」タブの内容）を先に定義しておく
-    tweet_list = profile_user.tweets.filter(retweet__isnull=True, reply__isnull=True)
+
+    # ベースとなるクエリセットを作成
+    # select_relatedでユーザー情報を事前に結合（JOIN）し、テンプレート表示時のN+1問題を防止
+    base_qs = (
+        Tweet.objects
+        .select_related('user', 'reply__user', 'retweet__user')
+        .order_by('-created_at')
+    )
     match tab:
         case 'retweet':
-            tweet_list = profile_user.tweets.filter(retweet__isnull=False)
+            tweet_list = base_qs.filter(user=profile_user, retweet__isnull=False)
         case 'comment':
-            tweet_list = profile_user.tweets.filter(reply__isnull=False)
+            tweet_list = base_qs.filter(user=profile_user, reply__isnull=False)
         case 'like':
-            tweet_ids = profile_user.likes.values_list('tweet_id', flat=True)
-            tweet_list = Tweet.objects.filter(id__in=tweet_ids).select_related('user')
+            tweet_list = base_qs.filter(favorited_by__user=profile_user).distinct()
+        case _:
+            tweet_list = base_qs.filter(user=profile_user, retweet__isnull=True, reply__isnull=True)
 
     # ページネーション設定 (10件ずつ)
     paginator = Paginator(tweet_list, 10)
